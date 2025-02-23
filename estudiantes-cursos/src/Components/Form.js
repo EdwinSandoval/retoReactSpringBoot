@@ -1,7 +1,17 @@
 import axios from 'axios';
-import React from 'react';
+// import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Form = ({book, setBook,setListUpdated}) => {
+
+    const [categorias, setCategorias] = useState([]);
+
+    useEffect(() => {
+        axios.get('http://localhost:8081/categoria/all')
+            .then(response => setCategorias(response.data))
+            .catch(error => console.error('Error al obtener categorías:', error));
+    }, []);
+
 
     const handleChange = e => {
         setBook({
@@ -10,13 +20,13 @@ const Form = ({book, setBook,setListUpdated}) => {
         })
     }
 
-    let {nombre, precio, descripcion,marca,categoria} = book
+    let {nombre, precio, descripcion,marca,categoriaId} = book
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         precio = parseFloat(precio)
         //validación de los datos
-        if (nombre === '' || precio <= 0   || categoria === '' ) {
+        if (nombre === '' || precio <= 0   || categoriaId === '' ) {
             alert('Todos los campos son obligatorios')
             return 
         }
@@ -26,15 +36,25 @@ const Form = ({book, setBook,setListUpdated}) => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(book)
         }
-        fetch('http://localhost:8081/producto', requestInit)
-        .then(res => res.text())
+        // fetch('http://localhost:8081/producto', requestInit)
+        // .then(res => res.text())
          
+        const response = await fetch('http://localhost:8081/producto', requestInit);
+        
+        // Verificar si la respuesta es correcta
+        if (!response.ok) {
+            const errorData = await response.json(); // Obtener el JSON del error
+            alert(`Error: ${errorData.message}`); // Mostrar el mensaje del backend
+            setListUpdated(true)
+            return;
+        }
+
         setBook({
             nombre:'',
             precio:0.0,
             descripcion:'',
             marca:'',
-            categoria:'',
+            categoriaId:'',
             
         })
         setListUpdated(true)
@@ -71,8 +91,22 @@ const Form = ({book, setBook,setListUpdated}) => {
         </div>
         <div className="row align-items-start">
             <div className="mb-4 col-6">
-                <label htmlFor="categoria" className="form-label">Categoria</label>
-                <input value={categoria}  name="categoria" onChange={handleChange} autocomplete="off" maxLength="50" type="text" id="categoria" className="form-control"/>
+                <label htmlFor="categoriaId" className="form-label">Categoria</label>
+                {/* <input value={categoriaId}  name="categoriaId" onChange={handleChange} autocomplete="off" maxLength="50" type="text" id="categoriaId" className="form-control"/> */}
+                <select
+                        value={categoriaId}
+                        name="categoriaId"
+                        onChange={handleChange}
+                        id="categoriaId"
+                        className="form-control"
+                    >
+                        <option value="">Seleccione una categoría</option>
+                        {categorias.map(categoria => (
+                            <option key={categoria.id} value={categoria.id}>
+                                {categoria.descripcion}
+                            </option>
+                        ))}
+                    </select>
             </div>
            
         </div>

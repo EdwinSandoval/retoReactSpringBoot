@@ -13,7 +13,7 @@ export default function Home(params) {
         precio:0.0,
         descripcion:'',
         marca:'',
-        categoria:''
+        categoriaId:''
       })
       
     

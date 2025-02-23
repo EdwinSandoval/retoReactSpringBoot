@@ -10,6 +10,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/categoria")
+@CrossOrigin(origins = "http://localhost:3000")
 public class CategoriaController {
 
     private final CategoriaService categoriaService;

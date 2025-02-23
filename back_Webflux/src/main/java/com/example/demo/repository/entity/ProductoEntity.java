@@ -1,9 +1,11 @@
 package com.example.demo.repository.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Getter
@@ -13,12 +15,11 @@ import org.springframework.data.relational.core.mapping.Table;
 public class ProductoEntity {
 
     @Id
-    Long id;
-    String nombre;
-    Double precio;
-    String descripcion;
-    String marca;
-    String categoria;
-
+    private Long id;
+    private String nombre;
+    private Double precio;
+    private String descripcion;
+    private String marca;
+    private Integer categoriaId;
 
 }

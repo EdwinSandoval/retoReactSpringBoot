@@ -16,8 +16,7 @@ const BookList = ({book, setBook, books, setListUpdated}) => {
   const [precio,setPrecio]=React.useState("")
   const [descripcion,setDescripcion]=React.useState("")
   const [marca,setMarca]=React.useState("")
-  const [categoria,setCategoria]=React.useState("")
-
+  const [categoriaId,setCategoriaId]=React.useState("")
  
 
   const handleUpdate2= async (id)=>{
@@ -30,13 +29,14 @@ const BookList = ({book, setBook, books, setListUpdated}) => {
               precio,
               descripcion,
               marca,
-              categoria
+              categoriaId
              
             }),
         }
        fetch('http://localhost:8081/producto/'+id, requestInit)
        setListUpdated(true)
        cerrarModalActualizar()
+       setListUpdated(true)
     
   }
 
@@ -61,7 +61,7 @@ const BookList = ({book, setBook, books, setListUpdated}) => {
           setPrecio(producto.precio)
           setDescripcion(producto.descripcion)
           setMarca(producto.marca)
-          setCategoria(producto.categoria)
+          setCategoriaId(producto.categoriaId)
           
         setstudent(respuesta.data)
         
@@ -71,6 +71,7 @@ const BookList = ({book, setBook, books, setListUpdated}) => {
       
     const cerrarModalActualizar = () => {
        setList(false)
+       setListUpdated(true)
     };
   
     return (
@@ -95,7 +96,7 @@ const BookList = ({book, setBook, books, setListUpdated}) => {
                 <td>{book.precio}</td>
                 <td>{book.descripcion}</td>
                 <td>{book.marca}</td>
-                <td>{book.categoria}</td>
+                <td>{book.categoriaId}</td>
                 
                 <td className="row">
                   <div className=" col">
@@ -129,26 +130,33 @@ const BookList = ({book, setBook, books, setListUpdated}) => {
         <div className="row align-items-start">
        
           <div className="mb-3 col"  style={{margin:'15px'}}>
-              <label htmlFor="nombres" className="form-label colorletra">Nombre</label>
-              <input   name="nombres" onChange={(e)=>setNombre(e.target.value)} autocomplete="off" defaultValue={student.nombre} type="text"  className="form-control" style={{textAlign:'left'}} maxLength="30"/>
+              <label htmlFor="nombre" className="form-label colorletra">Nombre</label>
+              <input   name="nombre" onChange={(e)=>setNombre(e.target.value)} autocomplete="off" defaultValue={student.nombre} type="text"  className="form-control" style={{textAlign:'left'}} maxLength="30"/>
           </div>
           <div className="mb-3 col"  style={{margin:'15px'}}>
-              <label htmlFor="apellidos" className="form-label colorletra">Precio</label>
-              <input name="apellidos" onChange={(e)=>setPrecio(e.target.value)} autocomplete="off" maxLength="30" defaultValue={student.precio} type="text" id="apellidos" className="form-control"/>
+              <label htmlFor="precio" className="form-label colorletra">Precio</label>
+              <input name="precio" onChange={(e)=>setPrecio(e.target.value)} autocomplete="off" maxLength="30" defaultValue={student.precio} type="text" id="precio" className="form-control"/>
           </div>
        </div>
        <div className="row align-items-start">
        
           <div className="mb-3 col"  style={{margin:'15px'}}>
-              <label htmlFor="nombres" className="form-label colorletra">Descripcion</label>
-              <input name="nombres" onChange={(e)=>setDescripcion(e.target.value)} autocomplete="off" defaultValue={student.descripcion} max="100" type="text" id="nombres" className="form-control" style={{textAlign:'left'}}/>
+              <label htmlFor="descripcion" className="form-label colorletra">Descripcion</label>
+              <input name="descripcion" onChange={(e)=>setDescripcion(e.target.value)} autocomplete="off" defaultValue={student.descripcion} max="100" type="text" id="descripcion" className="form-control" style={{textAlign:'left'}}/>
           </div>
           <div className="mb-3 col"  style={{margin:'15px'}}>
-              <label htmlFor="apellidos" className="form-label colorletra">Marca</label>
-              <input name="apellidos" onChange={(e)=>setMarca(e.target.value)} autocomplete="off" maxLength="8" defaultValue={student.marca} type="text" id="apellidos" className="form-control"/>
+              <label htmlFor="marca" className="form-label colorletra">Marca</label>
+              <input name="marca" onChange={(e)=>setMarca(e.target.value)} autocomplete="off" maxLength="8" defaultValue={student.marca} type="text" id="marca" className="form-control"/>
           </div>
        </div>
+       <div className="row align-items-start">
        
+          <div className="mb-3 col-5 "  style={{margin:'15px'}}>
+              <label htmlFor="categoriaId" className="form-label colorletra">Categoria</label>
+              <input name="categoriaId" onChange={(e)=>setCategoriaId(e.target.value)} autocomplete="off" defaultValue={student.categoriaId} max="100" type="text" id="categoriaId" className="form-control" style={{textAlign:'left'}}/>
+          </div>
+         
+       </div>
        
           <div style={{textAlign: 'center',margin:"20px"}}>
             <Button

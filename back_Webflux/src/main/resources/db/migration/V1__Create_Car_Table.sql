@@ -8,7 +8,7 @@ create table producto (
                          precio decimal(10,0),
                          descripcion varchar(255),
                          marca varchar(255),
-                         categoria varchar(255),
+                         categoria_id integer,
                          constraint producto_pk primary key (id)
 );
 
